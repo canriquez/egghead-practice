@@ -1,7 +1,22 @@
 import { todos, visibilityFilter } from './todoListReducer'
-import { createStore, combineReducers } from 'redux'
+import { createStore/* , combineReducers  */ } from 'redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
+
+/* It uses reduce to accumulate the reducers execution as a single return */
+const combineReducers = (reducers) => {
+    return (state = {}, action) => { //It returns a combined  top level reducer function
+        return Object.keys(reducers).reduce(
+            (nextState, key) => {  //nextState, is the accoumulation named variable
+                nextState[key] = reducers[key]( //it creates the nextState.key property iquals
+                    state[key],                 // to the result of the reduce executed
+                    action                      // for the particulat action
+                );
+                return nextState;               //returns the accumulated state for the next iteration (new key)
+            }, {} //Reduce initial empty object (in this case)
+        );
+    };
+};
 
 const todoApp = combineReducers({
     todos,
