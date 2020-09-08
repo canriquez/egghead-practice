@@ -1,51 +1,64 @@
+import { todos, visibilityFilter } from './todoListReducer'
 import { createStore } from 'redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const counter = (state = 0, action) => {
 
-    if (action.type === 'INCREMENT') {
-        return state + 1;
-    } else if (action.type === 'DECREMENT') {
-        return state - 1;
-    }
-    return state
-}
-
-
-const Counter = ({ value, onIncrement, onDecrement }) => {
-
-    return (<div>
-        <h1>{value}</h1>
-        <button onClick={onIncrement}>+</button>
-        <button onClick={onDecrement}>-</button>
-    </div>)
-}
-
-
-const store = createStore(counter);
-
-const render = () => {
-    ReactDOM.render(
-        <Counter value={store.getState()}
-            onIncrement={() =>
-                store.dispatch({
-                    type: 'INCREMENT'
-                })
-            }
-            onDecrement={() =>
-                store.dispatch({
-                    type: 'DECREMENT'
-                })
-            }
-        />,
-        document.getElementById('root')
-    );
+const todoApp = (state = {}, action) => {
+    return {
+        todos: todos(state.todos, action),
+        visibilityFilter: visibilityFilter(state.visibilityFilter, action)
+    };
 };
 
 
-store.subscribe(render);
-render();
+const store = createStore(todoApp) // We create a store with the reducer
+
+console.log('Initial State:');
+console.log(store.getState());
+console.log('--------------');
+
+console.log('Dispatching ADD_TODO.');
+store.dispatch({
+    type: 'ADD_TODO',
+    id: 0,
+    text: 'Learn Redux'
+});
+
+console.log('Current State:');
+console.log(store.getState());
+console.log('--------------');
+
+console.log('Dispatching ADD_TODO.');
+store.dispatch({
+    type: 'ADD_TODO',
+    id: 1,
+    text: 'Sign Spotify Job Contract '
+});
+
+console.log('Current State:');
+console.log(store.getState());
+console.log('--------------');
 
 
-export default counter;
+console.log('Dispatching TOGGLE_TODO.');
+store.dispatch({
+    type: 'TOGGLE_TODO',
+    id: 0,
+});
+
+console.log('Current State:');
+console.log(store.getState());
+console.log('--------------');
+
+
+console.log('Dispatching SET_VISIBILITY_FILTER');
+store.dispatch({
+    type: 'SET_VISIBILITY_FILTER',
+    filter: 'SHOW_COMPLETED'
+});
+
+console.log('Current State:');
+console.log(store.getState());
+console.log('--------------');
+

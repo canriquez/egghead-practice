@@ -1,8 +1,8 @@
 import deepFreeze from 'deep-freeze'
-import { todos } from './todoListReducer'
+import { todos, visibilityFilter } from './todoListReducer'
 
 
-it.only('test todos reducer', () => {
+it('test todos reducer', () => {
     const stateBefore = [];
     const action = {
         type: 'ADD_TODO',
@@ -27,7 +27,7 @@ it.only('test todos reducer', () => {
     ).toEqual(stateAfter);
 });
 
-it.only('test toggle ToDO reducer', () => {
+it('test toggle ToDO reducer', () => {
     const stateBefore = [
         {
             id: 0,
@@ -66,5 +66,25 @@ it.only('test toggle ToDO reducer', () => {
 
     expect(
         todos(stateBefore, action)
+    ).toEqual(stateAfter);
+});
+
+it('test VISIBILITY_FILTER', () => {
+    const stateBefore = {}
+
+
+    const action = {
+        type: 'SET_VISIBILITY_FILTER',
+        filter: 'SHOW_COMPLETED'
+    }
+
+    const stateAfter = 'SHOW_COMPLETED';
+
+    /* inmmutability check */
+    deepFreeze(stateBefore);  //makes sure reducer is pure function
+    deepFreeze(action); //makes sure reducer is pure function
+
+    expect(
+        visibilityFilter(stateBefore, action)
     ).toEqual(stateAfter);
 });
