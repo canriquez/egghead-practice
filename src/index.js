@@ -1,16 +1,12 @@
 import { todos, visibilityFilter } from './todoListReducer'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-
-const todoApp = (state = {}, action) => {
-    return {
-        todos: todos(state.todos, action),
-        visibilityFilter: visibilityFilter(state.visibilityFilter, action)
-    };
-};
-
+const todoApp = combineReducers({
+    todos,
+    visibilityFilter
+})
 
 const store = createStore(todoApp) // We create a store with the reducer
 
