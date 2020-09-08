@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze'
-import { addCounter, removeCounter, incrementCounter } from './inmutability'
+import { addCounter, removeCounter, incrementCounter, toggleTodo } from './inmutability'
 
 
 it('test inmmutability adCounter', () => {
@@ -34,5 +34,26 @@ it('test incrementCounter ', () => {
         incrementCounter(listBefore, 1)
     ).toEqual(listAfter);
 });
+
+
+it('test toogleTodo ', () => {
+    const todoBefore = {
+        id: 0,
+        text: 'Learn Redux',
+        completed: false
+    };
+    const todoAfter = {
+        id: 0,
+        text: 'Learn Redux',
+        completed: true
+    }
+
+    deepFreeze(todoBefore)
+
+    expect(
+        toggleTodo(todoBefore, 1)
+    ).toEqual(todoAfter);
+});
+
 
 

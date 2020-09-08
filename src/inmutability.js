@@ -23,4 +23,22 @@ const incrementCounter = (list, index) => {
     ]
 };
 
-export { addCounter, removeCounter, incrementCounter }
+const toggleTodo = (todo) => {
+    /*     todo.completed = !todo.completed; //Mutable code
+        return todo; */
+
+    /* Option 1 solution */
+    /* return Object.assign({}, todo, {
+        completed: !todo.completed
+    }) */
+
+    /* Option 2 solution - Object Spread operator*/
+    return {
+        ...todo,
+        completed: !todo.completed
+    }
+
+
+}
+
+export { addCounter, removeCounter, incrementCounter, toggleTodo }
