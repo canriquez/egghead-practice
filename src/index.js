@@ -48,6 +48,4 @@ store.subscribe(render);
 render();
 
 
-
-
 export default counter;
