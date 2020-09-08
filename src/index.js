@@ -2,6 +2,7 @@ import { todos, visibilityFilter } from './todoListReducer'
 import { createStore, combineReducers } from 'redux'
 import React from 'react'
 import ReactDOM from 'react-dom';
+import { TodoList } from './components/TodoList'
 
 
 const todoApp = combineReducers({
@@ -83,30 +84,14 @@ class TodoApp extends React.Component {
                 }} >
                     Add Todo
                 </button>
-                <ul>
-                    {visibleTodos.map(todo =>
-                        <li key={todo.id}
-                            onClick={() => {
-                                store.dispatch({
-                                    type: 'TOGGLE_TODO',
-                                    id: todo.id
-                                })
-                            }}
-                            style={
-                                {
-                                    textDecoration: todo.completed ?
-                                        'line-through' :
-                                        'none',
-                                    color: todo.completed ?
-                                        'gray' :
-                                        'blue'
-                                }
-                            }
-                        >
-                            {todo.text}
-                        </li>
-                    )}
-                </ul>
+                <TodoList
+                    todos={visibleTodos}
+                    onTodoClick={id =>
+                        store.dispatch({
+                            type: 'TOGGLE_TODO',
+                            id
+                        })}
+                />
                 <p>
                     Show Todos:
                     {' '}
