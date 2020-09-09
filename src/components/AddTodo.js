@@ -1,6 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const AddTodo = ({ store }) => {
+let AddTodo = ({ dispatch }) => {
     let input;
     let nextTodoId = 0;
     return (
@@ -10,7 +11,7 @@ const AddTodo = ({ store }) => {
             }
             } type="text" />
             <button onClick={() => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TODO',
                     id: nextTodoId += 1,
                     text: input.value
@@ -22,5 +23,8 @@ const AddTodo = ({ store }) => {
         </div>
     )
 }
+
+AddTodo = connect()(AddTodo);
+
 
 export { AddTodo }

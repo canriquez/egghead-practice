@@ -1,5 +1,6 @@
 import React from 'react'
 import { TodoList } from './TodoList'
+import { connect } from 'react-redux'
 
 
 const getVisibleTodos = (
@@ -23,10 +24,9 @@ const getVisibleTodos = (
 }
 
 
-
 class VisibleTodoList extends React.Component {
     componentDidMount() {
-        const { store } = this.props;
+        const { store } = this.context;
         this.unsuscribe = store.subscribe(() =>
             this.forceUpdate()
         );
@@ -35,8 +35,7 @@ class VisibleTodoList extends React.Component {
         this.unsubscribe();
     }
     render() {
-        const props = this.props;
-        const { store } = props;
+        const { store } = this.context;
         const state = store.getState();
 
         return (
@@ -56,6 +55,9 @@ class VisibleTodoList extends React.Component {
             />
         )
     }
+}
+VisibleTodoList.contextTypes = {
+    store: React.React.PropTypes
 }
 
 export { VisibleTodoList }
